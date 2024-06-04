@@ -5,10 +5,10 @@
     "exclusive": true,
     "passthrough": false,
     "gtk-layer-shell": true,
-    "height": 50,
-    "modules-left": ["clock","custom/weather","wlr/workspaces"],
-    "modules-center": ["hyprland/window"],
-    "modules-right": ["network", "bluetooth", "temperature","custom/power_profile","battery","backlight","pulseaudio","pulseaudio#microphone","tray"],
+    "height": 40,
+    "modules-left": ["clock","custom/weather", "wlr/taskbar"],
+    //"modules-center": ["hyprland/window"],
+    "modules-right": ["tray","network", "bluetooth","battery","backlight","temperature","pulseaudio","pulseaudio#microphone"],
     "hyprland/window": {
         "format": "{}"
     },
@@ -30,14 +30,13 @@
             "10": []
         }
     },
-    
-    "custom/power_profile":{
-        //shows the current power profile and switches to next on click
-        "exec": "asusctl profile -p | sed s:'Active profile is'::",
-        "interval": 30,
-        "format": "󰈐{}", 
-        "on-click": "asusctl profile -n; pkill -SIGRTMIN+8 waybar",
-        "signal": 8
+
+    "wlr/taskbar": {
+      "format": "{icon}",
+      "icon-size": 22,
+      "icon-theme": "Numix-Circle",
+      "tooltip-format": "{title}",
+      "on-click": "activate",
     },
 
    "custom/weather" : {
@@ -51,12 +50,18 @@
 
     "tray": {
         "icon-size": 18,
-        "spacing": 10
+        "spacing": 10,
+	      "show-items": ["all"]
     },
 
     "clock": {
-        "format": "{: %I:%M %p   %a, %b %e}",
-        "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>"
+        "format": "  {:%I:%M%p}",
+        "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>",
+	      "calendar": {
+		      "format": { 
+			      "today": "<span color='#ff6699'><b><u>{}</u></b></span>"
+		      } 
+	      } 
     },
 
     "backlight": {
@@ -86,8 +91,8 @@
         "tooltip": false,
         "format-muted": " Muted",
         "on-click": "pamixer -t",
-        "on-scroll-up": "pamixer -i 5",
-        "on-scroll-down": "pamixer -d 5",
+        "on-scroll-up": "pamixer -i 1",
+        "on-scroll-down": "pamixer -d 1",
         "scroll-step": 5,
         "format-icons": {
             "headphone": "",
@@ -105,14 +110,14 @@
         "format-source": " {volume}%",
         "format-source-muted": " Muted",
         "on-click": "pamixer --default-source -t",
-        "on-scroll-up": "pamixer --default-source -i 5",
-        "on-scroll-down": "pamixer --default-source -d 5",
+        "on-scroll-up": "pamixer --default-source -i 1",
+        "on-scroll-down": "pamixer --default-source -d 1",
         "scroll-step": 5
     },
     
     "temperature": {
         "thermal-zone": 1,
-        "format": "{temperatureF}°F ",
+        "format": "{temperatureC}°C ",
         "critical-threshold": 80,
         "format-critical": "{temperatureC}°C "
     },
@@ -134,5 +139,22 @@
 	    "tooltip-format": "{device_alias}",
 	    "tooltip-format-connected": " {device_enumerate}",
 	    "tooltip-format-enumerate-connected": "{device_alias}"
+    },
+
+    "wireplumber": {
+      "format": "{icon} {volume}%",
+      "format-muted": " Muted",
+      //"on-click": "helvum",
+      "on-click": "pamixer -t", 
+      //"format-icons": ["", "", ""]
+      "format-icons": {
+        "headphone": "",
+        "hands-free": "",
+        "headset": "",
+        "phone": "",
+        "portable": "",
+        "car": "",
+        "default": ["", "", ""]
+      }
     }
 }
