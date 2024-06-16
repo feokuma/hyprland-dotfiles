@@ -6,12 +6,10 @@
     "passthrough": false,
     "gtk-layer-shell": true,
     "height": 40,
-    "modules-left": ["clock","custom/weather", "wlr/taskbar"],
+    "modules-left": ["custom/weather","wlr/taskbar"],
     //"modules-center": ["hyprland/window"],
+    "modules-center": ["clock"],
     "modules-right": ["tray","network", "bluetooth","battery","backlight","temperature","pulseaudio","pulseaudio#microphone"],
-    "hyprland/window": {
-        "format": "{}"
-    },
 
     "wlr/workspaces": {
         "disable-scroll": true,
@@ -31,12 +29,27 @@
         }
     },
 
+      // Hyprland Window
+    "hyprland/window": {
+        "rewrite": {
+            "(.*) - Brave": "$1",
+            "(.*) - Chromium": "$1",
+            "(.*) - Brave Search": "$1",
+            "(.*) - Outlook": "$1",
+            "(.*) Microsoft Teams": "$1",
+            "(.*) - Mozilla Firefox": "$1"
+        },
+        "separate-outputs": true
+    },
+
+
     "wlr/taskbar": {
       "format": "{icon}",
       "icon-size": 22,
       "icon-theme": "Numix-Circle",
       "tooltip-format": "{title}",
       "on-click": "activate",
+      "active-first": "true",
     },
 
    "custom/weather" : {
@@ -61,7 +74,7 @@
 		      "format": { 
 			      "today": "<span color='#ff6699'><b><u>{}</u></b></span>"
 		      } 
-	      } 
+	      }
     },
 
     "backlight": {
